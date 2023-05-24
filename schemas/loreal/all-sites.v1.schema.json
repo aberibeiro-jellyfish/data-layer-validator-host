@@ -1,0 +1,1253 @@
+{
+  "client": "Loreal",
+  "project": "All Websites",
+  "version": "1.0",
+  "modelConsistency":[
+    {
+      "model": "product",
+      "unique": ["id"],
+      "params": ["category", "brand", "price", "name"]
+    }
+  ],
+  "eventAliases": [
+    { "event": "nievent", "alias": "event_name" },
+    { "event": "uaevent", "alias": "event_name" },
+    { "event": "checkout", "alias": "event_name" }
+  ],
+  "ignoredEvents": ["gtm\\..*"],
+  "flagAsianChars": true,
+  "models": {
+    "product": [
+      {
+        "key": "id",
+        "type": "string",
+        "required": true,
+        "example":"5345345",
+        "description": "Unique identifier for the product"
+      },
+      {
+        "key": "name",
+        "type": "string",
+        "required": true,
+        "example": "Lait Ultra Nourissant Revitalift Laser x3",
+        "description": "The human readable name of the product",
+        "lowercase": true
+      },
+      {
+        "key": "subname",
+        "type": "string",
+        "required": true,
+        "example": "Deodorant spray",
+        "lowercase": true,
+        "description": "The human readable subname of the product"
+      },
+      {
+        "key": "variant",
+        "type": "string",
+        "required": true,
+        "example": "Mint fresh",
+        "description": "The variant if applicable"
+      },
+      {
+        "key": "category",
+        "type": "string",
+        "required": true,
+        "example": "Shoes/Mens Shoes",
+        "description": "The category or slash separated categories hierarchy of the product",
+        "validation": ["^(hair-(care|color|texture|styling|multi)|hygiene-(bath|deodorants|shaving|multi)|makeup-(eye|face|lip|nail|multi)|skincare-(facecaring|bodycaring|facecleansing|instrumentalcosmetics|men|sun|multi)|fragrance-(women|men|multi))$"]
+      },
+      {
+        "key": "brand",
+        "type": "string",
+        "required": true,
+        "example": "Nike",
+        "description": "The product brand",
+        "uppercase": true,
+        "validation": ["^(AF|ADP|ATC|AMB|AZZ|BEG|BTE|BTY|BO|BIO|BLG|BOC|CAC|CC|OA|CD|CAR|CER|CHL|COA|CLR|CVB|CLA|DEC|DER|DC|DIE|ESS|GAR|GIO|GL|H99|HR|ITC|KIE|KER|Loc|LP|LPB|OAP|LPS|TR|LAS|CAD|DH|DES|DOP|EJ|FP|JLD|MEN|MIX|NAR|PRV|USH|VIV|LAN|LRP|LL|LOG|MBL|MM|MAK|MUP|MAT|MNY|MIZ|MDC|NIE|NYX|MUG|PRI|PUR|PRA|RL|RED|RG|SC|SAC|SAN|SGM|SHU|SAA|SKA|SCA|SBS|SKI|SSC|SP|SS|TBS|TA|THY|TKM|UD|VLT|VAP|VIC|VOG|VR|YSL|YSI|YTT)$"]
+      },
+      {
+        "key": "quantity",
+        "type": "integer",
+        "required": false,
+        "example": 1,
+        "description": "The quantity being added/removed from cart, or purchased"
+      },
+      {
+        "key": "position",
+        "type": "integer",
+        "required": false,
+        "example": 3,
+        "description": "If within a list context, the position of the product starting at 1"
+      },
+      {
+        "key": "price",
+        "type": "decimal2",
+        "required": true,
+        "example": 99.99,
+        "description": "The display price of the product (that which will be charged to the customer)"
+      },
+      {
+        "key": "dimension35",
+        "type": "string",
+        "required": true,
+        "example": "30mg",
+        "description": "The product size or 'none' if not applicable"
+      },
+      {
+        "key": "dimension36",
+        "type": "string",
+        "required": true,
+        "example": "beige",
+        "description": "The product shade or 'none' if not applicable"
+      },
+      {
+        "key": "dimension37",
+        "type": "string",
+        "required": true,
+        "example": "lavender",
+        "description": "The product fragrance of 'none' if not applicable"
+      },
+      {
+        "key": "dimension38",
+        "type": "string",
+        "required": true,
+        "example": "5",
+        "description": "The product rating or 'none' if not applicable",
+        "validation": ["^(\\d(\\.\\d)?|none)$"]
+      },
+      {
+        "key": "dimension39",
+        "type": "string",
+        "required": true,
+        "example": "in stock",
+        "lowercase": true,
+        "description": "The product availability at the variation id level, or 'none' if not applicable",
+        "validation": ["^(in stock|out of stock|discontinued|none)$"]
+      },
+      {
+        "key": "dimension40",
+        "type": "string",
+        "required": true,
+        "example": "activated::3weeks",
+        "lowercase": true,
+        "description": "The product replenishment per month, or 'none' if not applicable",
+        "validation": ["^(((activated|present|not present)::\\d{1,3}(months|weeks?|days)(::\\d{1,3}times)?)|none)$"]
+      },
+      {
+        "key": "dimension48",
+        "type": "string",
+        "required": true,
+        "example": "92837493847",
+        "description": "The product variation ID (EAN), :: seperated if applicable",
+        "validation": ["^[\\d:]+$"]
+      },
+      {
+        "key": "dimension49",
+        "type": "string",
+        "required": true,
+        "example": "present",
+        "lowercase": true,
+        "description": "Is the modiface/perfect module present on the page",
+        "validation": ["^(not present|present|activated)$"]
+      },
+      {
+        "key": "dimension50",
+        "type": "decimal2",
+        "required": true,
+        "example": 25.64,
+        "description": "The original price minus discounts"
+      },
+      {
+        "key": "dimension59",
+        "type": "integer",
+        "required": true,
+        "example": 17,
+        "description": "Total number of reviews for the product"
+      },
+      {
+        "key": "dimension91",
+        "type": "string",
+        "required": true,
+        "example": "productfinder",
+        "lowercase": true,
+        "description": "Services linked to the product, or 'none' if not applicable",
+        "validation": ["^((productfinder|skindr|shadefinder|facearchitect|none)(::)?)*$"]
+      },
+      {
+        "key": "dimension151",
+        "type": "string",
+        "required": true,
+        "example": "bestSelling",
+        "description": "The badge/sticker attached to the product, or 'none' if not applicable"
+      },
+      {
+        "key": "dimension153",
+        "type": "string",
+        "required": true,
+        "example": "present",
+        "lowercase": true,
+        "description": "Is the product eligible for personalisation",
+        "validation": ["^(not present|present|activated)$"]
+      },
+      {
+        "key": "dimension154",
+        "type": "string",
+        "required": true,
+        "example": "accessories||myvaluehere",
+        "description": "The personalisation applied to the product, or 'none' if not applicable"
+      },
+      {
+        "key": "dimension167",
+        "type": "string",
+        "required": true,
+        "example": "la vie est belle",
+        "lowercase": true,
+        "description": "The product collection name, or 'none' if not applicable"
+      },
+      {
+        "key": "dimension168",
+        "type": "string",
+        "required": true,
+        "example": "notActivated",
+        "description": "Is the product present in an Einstein recommendation",
+        "validation": ["^(notActivated|activated)$"]
+      },
+      {
+        "key": "dimension169",
+        "type": "string",
+        "required": true,
+        "example": "[product-set_[MySetMasterSKU]",
+        "description": "Is the product part of a set or bundle"
+      },
+      {
+        "key": "metric21",
+        "type": "decimal2",
+        "required": false,
+        "example": 25.67,
+        "description": "The product price without discounts"
+      },
+      {
+        "key": "metric52",
+        "type": "integer",
+        "required": true,
+        "example": 0,
+        "description": "Total stock availability for the product",
+        "validation": ["^0|1$"]
+      }
+    ],
+    "promotion": [
+      {
+        "key": "id",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "key": "name",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "key": "creative",
+        "required": true,
+        "type": "string"
+      },
+      {
+        "key": "position",
+        "required": true,
+        "type": "string"
+      }
+    ]
+  },
+  "initialData":{
+    "identifiedBy": ["language", "country"],
+    "params":[
+      {
+        "key": "brand",
+        "type": "string",
+        "required": true,
+        "example": "OAP",
+        "description": "Brand abbreviation",
+        "uppercase": true,
+        "validation": ["^(AF|ADP|ATC|AMB|AZZ|BEG|BTE|BTY|BO|BIO|BLG|BOC|CAC|CC|OA|CD|CAR|CER|CHL|COA|CLR|CVB|CLA|DEC|DER|DC|DIE|ESS|GAR|GIO|GL|H99|HR|ITC|KIE|KER|Loc|LP|LPB|OAP|LPS|TR|LAS|CAD|DH|DES|DOP|EJ|FP|JLD|MEN|MIX|NAR|PRV|USH|VIV|LAN|LRP|LL|LOG|MBL|MM|MAK|MUP|MAT|MNY|MIZ|MDC|NIE|NYX|MUG|PRI|PUR|PRA|RL|RED|RG|SC|SAC|SAN|SGM|SHU|SAA|SKA|SCA|SBS|SKI|SSC|SP|SS|TBS|TA|THY|TKM|UD|VLT|VAP|VIC|VOG|VR|YSL|YSI|YTT)$"]
+      },
+      {
+        "key": "country",
+        "type": "string",
+        "required": true,
+        "example": "FR",
+        "description": "The country ISO 3166 code",
+        "uppercase": true
+      },
+      {
+        "key": "language",
+        "type": "string",
+        "required": true,
+        "example": "en",
+        "description": "The language ISO 639-1 code",
+        "lowercase": true
+      },
+      {
+       "key":"siteTypeLevel",
+       "type": "string",
+       "required": true,
+       "lowercase": true,
+       "validation": ["^(main|minisite|testing|app)$"]
+      },
+      {
+        "key":"pageCategory",
+        "type": "string",
+        "required": true,
+        "lowercase": true,
+        "validation": ["^(appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
+       }
+    ]
+  },
+  "events": [
+    {
+      "event": "view_promotion",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "Promotion Impressions",
+          "validation": ["^Promotion Impressions$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "description": "The page category",
+          "validation": ["^(appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
+        },   
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "promoView",
+              "type": "object",
+              "required": true,
+              "properties":[
+                {
+                  "key": "promotions",
+                  "type": "array",
+                  "required": true,
+                  "itemType": "object",
+                  "model": "promotion",
+                  "description": "The promotions in the impression"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "promotionClick",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "Promotion Click",
+          "validation": ["^Promotion Click$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "validation": [".+::.+"]
+        },   
+        {
+          "key": "event_name",
+          "required": true,
+          "type": "string",
+          "validation": ["^select_promotion$"]
+        },
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "promoClick",
+              "type": "object",
+              "required": true,
+              "properties":[
+                {
+                  "key": "promotions",
+                  "type": "array",
+                  "required": true,
+                  "itemType": "object",
+                  "model": "promotion",
+                  "description": "The clicked promotion"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "productClick",
+      "params": [  
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "Product Click",
+          "validation": ["^Product Click$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "example": "Lait Ultra Nourissant Revitalift Laser x3::LP10000",
+          "validation": [".+::.+"]
+        },   
+        {
+          "key": "event_name",
+          "type": "string",
+          "required": true,
+          "example": "select_item",
+          "validation": ["^select_item$"]
+        },
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "click",
+              "type": "object",
+              "required": true,
+              "properties":[
+                {
+                  "key": "actionField",
+                  "required": true,
+                  "type": "object",
+                  "properties":[
+                    {
+                      "key": "list",
+                      "required": true,
+                      "type": "string",
+                      "description": "The name of the list the product was clicked in",
+                      "example": "shampoo category page"
+                    }
+                  ]
+                },
+                {
+                  "key": "products",
+                  "type": "array",
+                  "required": true,
+                  "itemType": "object",
+                  "model": "product",
+                  "description": "The product that was clicked"
+                }
+              ]
+            }
+          ]
+        }
+        
+      ]
+    },
+    {
+      "event": "view_item_list",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "Product Impressions",
+          "validation": ["^Product Impressions$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "description": "The page category",
+          "validation": ["^(appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
+        }, 
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "currencyCode",
+              "required": true,
+              "type": "string",
+              "uppercase": true
+            },
+            {
+              "key": "impressions",
+              "type": "array",
+              "required": true,
+              "itemType": "object",
+              "model": "product",
+              "description": "The products in the impression"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "view_item",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "Product Detail",
+          "validation": ["^Product Detail$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "example": "Lait Ultra Nourissant Revitalift Laser x3::LP10000",
+          "validation": [".+::.+"]
+        }, 
+        {
+          "key": "numberReviews",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "detail",
+              "type": "object",
+              "required": true,
+              "properties":[
+                {
+                  "key": "actionField",
+                  "required": true,
+                  "type": "object",
+                  "properties":[
+                    {
+                      "key": "list",
+                      "required": true,
+                      "type": "string",
+                      "description": "The name of the list the product was clicked in",
+                      "example": "shampoo category page"
+                    }
+                  ]
+                },
+                {
+                  "key": "products",
+                  "type": "array",
+                  "required": true,
+                  "itemType": "object",
+                  "model": "product",
+                  "description": "The product that was viewed"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "addToCart",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "Add to Cart",
+          "validation": ["^Add to Cart$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "example": "Lait Ultra Nourissant Revitalift Laser x3::LP10000",
+          "validation": [".+::.+"]
+        }, 
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "currencyCode",
+              "required": true,
+              "type": "string",
+              "uppercase": true
+            },
+            {
+              "key": "add",
+              "type": "object",
+              "required": true,
+              "properties":[
+                {
+                  "key": "products",
+                  "type": "array",
+                  "required": true,
+                  "itemType": "object",
+                  "model": "product",
+                  "description": "The product that was added to the cart"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "removeFromCart",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "Remove from Cart",
+          "validation": ["^Remove from Cart$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "example": "Lait Ultra Nourissant Revitalift Laser x3::LP10000",
+          "validation": [".+::.+"]
+        }, 
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "currencyCode",
+              "required": true,
+              "type": "string",
+              "uppercase": true
+            },
+            {
+              "key": "remove",
+              "type": "object",
+              "required": true,
+              "properties":[
+                {
+                  "key": "products",
+                  "type": "array",
+                  "required": true,
+                  "itemType": "object",
+                  "model": "product",
+                  "description": "The product that was removed from the cart"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "view_cart",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "Checkout",
+          "validation": ["^Checkout$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "example": "Checkout",
+          "validation": ["^Checkout$"]
+        }, 
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "checkout",
+              "type": "object",
+              "required": true,
+              "properties":[
+                {
+                  "key": "actionField",
+                  "required": true,
+                  "type": "object",
+                  "properties":[
+                    {
+                      "key": "step",
+                      "required": true,
+                      "type": "string",
+                      "description": "The checkout step number",
+                      "example": "1",
+                      "validation": ["^1$"]
+                    },
+                    {
+                      "key": "option",
+                      "required": false,
+                      "type": "string",
+                      "description": "The option associated with the step, if applicable",
+                      "example": "Visa"
+                    }
+                  ]
+                },
+                {
+                  "key": "products",
+                  "type": "array",
+                  "required": true,
+                  "itemType": "object",
+                  "model": "product",
+                  "description": "The products being purchased"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "add_shipping_info",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "Checkout",
+          "validation": ["^Checkout$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "example": "Checkout",
+          "validation": ["^Checkout$"]
+        }, 
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "checkout",
+              "type": "object",
+              "required": true,
+              "properties":[
+                {
+                  "key": "actionField",
+                  "required": true,
+                  "type": "object",
+                  "properties":[
+                    {
+                      "key": "step",
+                      "required": true,
+                      "type": "string",
+                      "description": "The checkout step number",
+                      "example": "3",
+                      "validation": ["^3$"]
+                    },
+                    {
+                      "key": "option",
+                      "required": false,
+                      "type": "string",
+                      "description": "The option associated with the step, if applicable",
+                      "example": "Express Delivery"
+                    }
+                  ]
+                },
+                {
+                  "key": "products",
+                  "type": "array",
+                  "required": true,
+                  "itemType": "object",
+                  "model": "product",
+                  "description": "The products being purchased"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "add_payment_info",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "Checkout",
+          "validation": ["^Checkout$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "example": "Checkout",
+          "validation": ["^Checkout$"]
+        }, 
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "checkout",
+              "type": "object",
+              "required": true,
+              "properties":[
+                {
+                  "key": "actionField",
+                  "required": true,
+                  "type": "object",
+                  "properties":[
+                    {
+                      "key": "step",
+                      "required": true,
+                      "type": "string",
+                      "description": "The checkout step number",
+                      "example": "5",
+                      "validation": ["^5$"]
+                    },
+                    {
+                      "key": "option",
+                      "required": false,
+                      "type": "string",
+                      "description": "The option associated with the step, if applicable",
+                      "example": "Visa"
+                    }
+                  ]
+                },
+                {
+                  "key": "products",
+                  "type": "array",
+                  "required": true,
+                  "itemType": "object",
+                  "model": "product",
+                  "description": "The products being purchased"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "checkoutOption",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "checkout Option",
+          "validation": ["^checkout Option$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "example": "Visa"
+        }, 
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "checkout_option",
+              "type": "object",
+              "required": true,
+              "properties":[
+                {
+                  "key": "actionField",
+                  "required": true,
+                  "type": "object",
+                  "properties":[
+                    {
+                      "key": "step",
+                      "required": true,
+                      "type": "integer",
+                      "description": "The checkout step number",
+                      "example": 1
+                    },
+                    {
+                      "key": "option",
+                      "required": true,
+                      "type": "string",
+                      "description": "The option associated with the step",
+                      "example": "Visa"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "purchase",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "Purchase",
+          "validation": ["^Purchase$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "example": "Purchase",
+          "validation": ["^Purchase$"]
+        },
+        {
+          "key": "couponType",
+          "required": true,
+          "type": "string",
+          "example": "order||Percent Off::shipping||Free Shipping"
+        },
+        {
+          "key": "autoReplenishment",
+          "required": true,
+          "type": "boolean",
+          "example": true
+        },
+        {
+          "key": "couponValue",
+          "required": true,
+          "type": "decimal2",
+          "example": 23.54
+        },
+        {
+          "key": "couponOrderValue",
+          "required": true,
+          "type": "decimal2",
+          "example": 23.54
+        },
+        {
+          "key": "couponShippingValue",
+          "required": true,
+          "type": "decimal2",
+          "example": 23.54
+        },
+        {
+          "key": "couponProductValue",
+          "required": true,
+          "type": "decimal2",
+          "example": 23.54
+        },
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "purchase",
+              "type": "object",
+              "required": true,
+              "properties":[
+                {
+                  "key": "actionField",
+                  "required": true,
+                  "type": "object",
+                  "properties":[
+                    {
+                      "key": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": "The order/transaction ID",
+                      "example": "23874532"
+                    },
+                    {
+                      "key": "affiliation",
+                      "required": true,
+                      "type": "string"
+                    },
+                    {
+                      "key": "revenue",
+                      "required": true,
+                      "type": "decimal2"
+                    },
+                    {
+                      "key": "tax",
+                      "required": true,
+                      "type": "decimal2"
+                    },
+                    {
+                      "key": "shipping",
+                      "required": true,
+                      "type": "decimal2"
+                    },
+                    {
+                      "key": "coupon",
+                      "required": false,
+                      "type": "string"
+                    }
+                  ]
+                },
+                {
+                  "key": "products",
+                  "type": "array",
+                  "required": true,
+                  "itemType": "object",
+                  "model": "product",
+                  "description": "The products being purchased"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "checkout_payment_failed",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "example": "Ecommerce",
+          "validation": ["^Ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "example": "Purchase",
+          "validation": ["^Purchase$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "example": "Purchase Failed",
+          "validation": ["^Purchase Failed$"]
+        },
+        {
+          "key": "couponType",
+          "required": true,
+          "type": "string",
+          "example": "order||Percent Off::shipping||Free Shipping"
+        },
+        {
+          "key": "autoReplenishment",
+          "required": true,
+          "type": "boolean",
+          "example": true
+        },
+        {
+          "key": "couponValue",
+          "required": true,
+          "type": "decimal2",
+          "example": 23.54
+        },
+        {
+          "key": "couponOrderValue",
+          "required": true,
+          "type": "decimal2",
+          "example": 23.54
+        },
+        {
+          "key": "couponShippingValue",
+          "required": true,
+          "type": "decimal2",
+          "example": 23.54
+        },
+        {
+          "key": "couponProductValue",
+          "required": true,
+          "type": "decimal2",
+          "example": 23.54
+        },
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "purchase",
+              "type": "object",
+              "required": true,
+              "properties":[
+                {
+                  "key": "actionField",
+                  "required": true,
+                  "type": "object",
+                  "properties":[
+                    {
+                      "key": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": "The order/transaction ID",
+                      "example": "23874532"
+                    },
+                    {
+                      "key": "affiliation",
+                      "required": true,
+                      "type": "string"
+                    },
+                    {
+                      "key": "revenue",
+                      "required": true,
+                      "type": "decimal2"
+                    },
+                    {
+                      "key": "tax",
+                      "required": true,
+                      "type": "decimal2"
+                    },
+                    {
+                      "key": "shipping",
+                      "required": true,
+                      "type": "decimal2"
+                    },
+                    {
+                      "key": "coupon",
+                      "required": false,
+                      "type": "string"
+                    }
+                  ]
+                },
+                {
+                  "key": "products",
+                  "type": "array",
+                  "required": true,
+                  "itemType": "object",
+                  "model": "product",
+                  "description": "The products being purchased"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "where_to_buy",
+      "params":[
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "validation": ["^Ecommerce$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^where to buy$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "The store name"
+        },
+        {
+          "key": "store_name",
+          "type": "string",
+          "required": true,
+          "description": "The store name"
+        },
+        {
+          "key": "product_info",
+          "type": "string",
+          "required": false,
+          "example": "Lait Ultra Nourissant Revitalift Laser x3::LP10000",
+          "validation": [".+::.+"]
+        }
+      ]
+    }
+  ]
+}
