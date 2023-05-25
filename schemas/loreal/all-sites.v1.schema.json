@@ -2,6 +2,7 @@
   "client": "Loreal",
   "project": "All Websites",
   "version": "1.0",
+  "libVersion": "0.2.1",
   "modelConsistency":[
     {
       "model": "product",
@@ -643,6 +644,46 @@
       ]
     },
     {
+      "event": "add_to_wishlist",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "validation": ["^add to favorites$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "description": "EAN and product name seperated by ::",
+          "validation": [".+::.+"]
+        }, 
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "products",
+              "type": "array",
+              "required": true,
+              "itemType": "object",
+              "model": "product",
+              "description": "The product that was added to the wishlist"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "event": "removeFromCart",
       "params": [
         {
@@ -1246,6 +1287,870 @@
           "required": false,
           "example": "Lait Ultra Nourissant Revitalift Laser x3::LP10000",
           "validation": [".+::.+"]
+        }
+      ]
+    },
+    {
+      "event": "buy_now",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "validation": ["^Ecommerce$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^click to buy$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "example": "Lait Ultra Nourissant Revitalift Laser x3::LP10000",
+          "validation": [".+::.+"]
+        },
+        {
+          "key": "product_info",
+          "type": "string",
+          "required": false,
+          "example": "Lait Ultra Nourissant Revitalift Laser x3::LP10000",
+          "validation": [".+::.+"]
+        }
+      ]
+    },
+    {
+      "event": "notify_me",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "validation": ["^Ecommerce$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^notify me$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "example": "Lait Ultra Nourissant Revitalift Laser x3::LP10000",
+          "validation": [".+::.+"]
+        },
+        {
+          "key": "product_info",
+          "type": "string",
+          "required": false,
+          "example": "Lait Ultra Nourissant Revitalift Laser x3::LP10000",
+          "validation": [".+::.+"]
+        }
+      ]
+    },
+    {
+      "event": "submit_contact_form",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "validation": ["^form$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^submit$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "example": "contact form"
+        },
+        {
+          "key": "requestType",
+          "type": "string",
+          "required": true,
+          "description": "The subject/topic of the enquiry"
+        }
+      ]
+    },
+    {
+      "event": "newsletter_registration",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "validation": ["^registration$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^newsletter$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "example": "footer",
+          "description": "The referrer: popin, footer, header, etc"
+        },
+        {
+          "key": "referral",
+          "type": "string",
+          "required": true,
+          "example": "footer",
+          "description": "The referrer: popin, footer, header, etc"
+        }
+      ]
+    },
+    {
+      "event": "loyalty_program_registration",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "validation": ["^registration$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^loyalty program$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "example": "footer",
+          "description": "The referrer: popin, footer, header, etc"
+        },
+        {
+          "key": "referral",
+          "type": "string",
+          "example": "footer",
+          "description": "The referrer: popin, footer, header, etc"
+        }
+      ]
+    },
+    {
+      "event": "account_registration",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "validation": ["^registration$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^account signup::.*$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "example": "footer",
+          "description": "The referrer: popin, footer, header, etc"
+        },
+        {
+          "key": "referral",
+          "type": "string",
+          "example": "footer",
+          "description": "The referrer: popin, footer, header, etc"
+        },
+        {
+          "key": "method",
+          "type": "string",
+          "required": true,
+          "example": "social",
+          "description": "social, regular, etc"
+        }
+      ]
+    },
+    {
+      "event": "submit_review",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^product detail page|my account$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^submit a review$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "validation": ["^.*::.*$"],
+          "description": "Product name and ID"
+        },
+        {
+          "key": "product_info",
+          "type": "string",
+          "required": true,
+          "validation": ["^.*::.*$"],
+          "description": "Product name and ID"
+        }
+      ]
+    },
+    {
+      "event": "read_article",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "description": "The page category",
+          "validation": ["^(appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^read article$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "The article name"
+        },
+        {
+          "key": "article_name",
+          "type": "string",
+          "required": true,
+          "description": "The article name"
+        }
+      ]
+    },
+    {
+      "event": "internal_search",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^internal search$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^search::(manual|autocompletion)$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "Search keyword/term"
+        },
+        {
+          "key": "serch_keyword",
+          "type": "string",
+          "required": true,
+          "description": "Search keyword/term"
+        },
+        {
+          "key": "numberResults",
+          "type": "integer",
+          "required": true
+        }
+      ]
+    },
+    {
+      "event": "read_review",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^product detail page$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^read review$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "validation": ["^.*::.*$"],
+          "description": "Product name and ID"
+        },
+        {
+          "key": "product_info",
+          "type": "string",
+          "required": true,
+          "validation": ["^.*::.*$"],
+          "description": "Product name and ID"
+        }
+      ]
+    },
+    {
+      "event": "store_locator",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^store locator$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^find a store$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "The search keyword/term"
+        },
+        {
+          "key": "search_keyword",
+          "type": "string",
+          "required": true,
+          "description": "The search keyword/term"
+        },
+        {
+          "key": "numberResults",
+          "type": "integer",
+          "required": true
+        }
+      ]
+    },
+    {
+      "event": "salon_locator",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^salon locator$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^find a salon$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "The search keyword/term"
+        },
+        {
+          "key": "search_keyword",
+          "type": "string",
+          "required": true,
+          "description": "The search keyword/term"
+        },
+        {
+          "key": "numberResults",
+          "type": "integer",
+          "required": true
+        }
+      ]
+    },
+    {
+      "event": "itinerary",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^store locator|salon locator$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^itinerary$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "The store or salon name"
+        },
+        {
+          "key": "store_name",
+          "type": "string",
+          "required": true,
+          "description": "The store or salon name"
+        }
+      ]
+    },
+    {
+      "event": "request_sample",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^sample$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^select::request sample$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "The sample name"
+        },
+        {
+          "key": "sample_name",
+          "type": "string",
+          "required": true,
+          "description": "The sample name"
+        }
+      ]
+    },
+    {
+      "event": "product_info_click",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^product detail page$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "description": "The product tab name"
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "validation": ["^.*::.*$"],
+          "description": "Product name and ID"
+        },
+        {
+          "key": "product_tab",
+          "type": "string",
+          "required": true,
+          "description": "The product tab name"
+        },
+        {
+          "key": "product_info",
+          "type": "string",
+          "required": true,
+          "validation": ["^.*::.*$"],
+          "description": "Product name and ID"
+        }
+      ]
+    },
+    {
+      "event": "validate_quizz",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "description": "The quiz type"
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^validate::quizz$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "The quiz name"
+        },
+        {
+          "key": "quizz_type",
+          "type": "string",
+          "required": true,
+          "description": "The quiz type"
+        },
+        {
+          "key": "quizz_name",
+          "type": "string",
+          "required": true,
+          "description": "The quiz name"
+        }
+      ]
+    },
+    {
+      "event": "write_review",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^product detail page|my account$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^write review$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "validation": ["^.*::.*$"],
+          "description": "Product name and ID"
+        },
+        {
+          "key": "product_info",
+          "type": "string",
+          "required": true,
+          "validation": ["^.*::.*$"],
+          "description": "Product name and ID"
+        }
+      ]
+    },
+    {
+      "event": "social_interaction",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "description": "The social network name"
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "description": "like, tweet, send, etc"
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "The destination URL"
+        },
+        {
+          "key": "social_network",
+          "type": "string",
+          "required": true,
+          "description": "The social network name"
+        },
+        {
+          "key": "social_action",
+          "type": "string",
+          "required": true,
+          "description": "like, tweet, send, etc"
+        }
+      ]
+    },
+    {
+      "event": "login",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^log in$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "example": "social::facebook",
+          "validation": ["^social::.*|regular$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "example": "footer",
+          "description": "The referrer: popin, footer, header, etc"
+        },
+        {
+          "key": "referral",
+          "type": "string",
+          "required": true,
+          "example": "footer",
+          "description": "The referrer: popin, footer, header, etc"
+        },
+        {
+          "key": "method",
+          "type": "string",
+          "required": true,
+          "example": "social::facebook",
+          "validation": ["^social::.*|regular$"]
+        }
+      ]
+    },
+    {
+      "event": "video_interaction",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^video$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "example": "10% viewed",
+          "lowercase": true,
+          "validation": ["^play|pause|video completed|\\d{1,3} viewed|pause|buffering$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "The video title"
+        },
+        {
+          "key": "video_action",
+          "type": "string",
+          "required": true,
+          "example": "10% viewed",
+          "lowercase": true,
+          "validation": ["^play|pause|video completed|\\d{1,3} viewed|pause|buffering$"]
+        },
+        {
+          "key": "video_title",
+          "type": "string",
+          "required": true,
+          "description": "The video title"
+        }
+      ]
+    },
+    {
+      "event": "use_filters",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^product selector page$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^filter|sort$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "The filter name or sort order"
+        },
+        {
+          "key": "filter_type",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^filter|sort$"]
+        },
+        {
+          "key": "filter_value",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^.*::.*$"],
+          "description": "The filter name and value/sort order"
+        }
+      ]
+    },
+    {
+      "event": "print",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^my account$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^print$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "The file name"
+        },
+        {
+          "key": "file_name",
+          "type": "string",
+          "required": true,
+          "description": "The file name"
+        }
+      ]
+    }, 
+    {
+      "event": "menu_click",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^main menu navigation$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^select::(header|footer|burger menu)$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "The breadcrumb levels separated by ::"
+        },
+        {
+          "key": "click_area",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^select::(header|footer|burger menu)$"]
+        },
+        {
+          "key": "breadcrumb",
+          "type": "string",
+          "required": true,
+          "description": "The breadcrumb levels separated by ::"
+        }
+      ]
+    },
+    {
+      "event": "logo_click",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^main menu navigation$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^select$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^logo$"]
+        }
+      ]
+    },
+    {
+      "event": "reinsurance_click",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^reinsurance elements$"]
+        },
+        {
+          "key": "eventAction",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^call|select$"]
+        },
+        {
+          "key": "eventLabel",
+          "type": "string",
+          "required": true,
+          "description": "Number or destination URL"
+        },
+        {
+          "key": "click_action",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^call|select$"]
+        },
+        {
+          "key": "link_url",
+          "type": "string",
+          "required": true,
+          "description": "Number or destination URL"
+        },
+        {
+          "key": "event_detail",
+          "type": "string",
+          "required": true,
+          "description": "The number"
         }
       ]
     }
