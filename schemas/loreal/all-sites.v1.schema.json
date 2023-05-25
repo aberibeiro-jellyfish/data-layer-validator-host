@@ -278,7 +278,8 @@
         "required": true,
         "example": "FR",
         "description": "The country ISO 3166 code",
-        "uppercase": true
+        "uppercase": true,
+        "validation": ["^AU|HK|IN|ID|JP|MY|MM|NZ|PH|SG|KR|TW|TH|VN|ME|AE|SA|KW|OM|QA|EG|LB|MA|PK$"]
       },
       {
         "key": "language",
@@ -286,7 +287,8 @@
         "required": true,
         "example": "en",
         "description": "The language ISO 639-1 code",
-        "lowercase": true
+        "lowercase": true,
+        "validation": ["^en|zh|id|ja|ms|ko|th|vi|ar$"]
       },
       {
        "key":"siteTypeLevel",
@@ -509,7 +511,8 @@
               "key": "currencyCode",
               "required": true,
               "type": "string",
-              "uppercase": true
+              "uppercase": true,
+              "validation": ["^AUD|HKD|INR|IDR|JPY|MYR|NZD|PHP|SGD|KRW|TWD|THB|VND|BS|AED|SAR|KWD|OMR|QAR|EGP|LBP$"]
             },
             {
               "key": "impressions",
@@ -623,7 +626,8 @@
               "key": "currencyCode",
               "required": true,
               "type": "string",
-              "uppercase": true
+              "uppercase": true,
+              "validation": ["^AUD|HKD|INR|IDR|JPY|MYR|NZD|PHP|SGD|KRW|TWD|THB|VND|BS|AED|SAR|KWD|OMR|QAR|EGP|LBP$"]
             },
             {
               "key": "add",
@@ -717,7 +721,8 @@
               "key": "currencyCode",
               "required": true,
               "type": "string",
-              "uppercase": true
+              "uppercase": true,
+              "validation": ["^AUD|HKD|INR|IDR|JPY|MYR|NZD|PHP|SGD|KRW|TWD|THB|VND|BS|AED|SAR|KWD|OMR|QAR|EGP|LBP$"]
             },
             {
               "key": "remove",
@@ -803,6 +808,44 @@
                   "description": "The products being purchased"
                 }
               ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "event": "begin_checkout",
+      "params": [
+        {
+          "key": "eventCategory",
+          "type": "string",
+          "required": true,
+          "validation": ["^ecommerce$"]
+        },  
+        {
+          "key": "eventAction",
+          "required": true,
+          "type": "string",
+          "validation": ["^select::checkout$"]
+        },
+        {
+          "key": "eventLabel",
+          "required": true,
+          "type": "string",
+          "validation": ["^button_top|button_down$"]
+        }, 
+        {
+          "key": "ecommerce",
+          "type": "object",
+          "required": true,
+          "properties":[
+            {
+              "key": "products",
+              "type": "array",
+              "required": true,
+              "itemType": "object",
+              "model": "product",
+              "description": "The product that are being purchased"
             }
           ]
         }
@@ -1375,12 +1418,13 @@
           "key": "eventLabel",
           "type": "string",
           "required": true,
-          "example": "contact form"
+          "lowercase": true,
+          "validation": ["^contact form$"]
         },
         {
           "key": "requestType",
           "type": "string",
-          "required": true,
+          "required": false,
           "description": "The subject/topic of the enquiry"
         }
       ]
@@ -1406,14 +1450,15 @@
           "type": "string",
           "required": true,
           "example": "footer",
-          "description": "The referrer: popin, footer, header, etc"
+          "lowercase": true,
+          "validation": ["^pop-?in|footer|header|my account|modal$"]
         },
         {
           "key": "referral",
           "type": "string",
           "required": true,
-          "example": "footer",
-          "description": "The referrer: popin, footer, header, etc"
+          "lowercase": true,
+          "validation": ["^pop-?in|footer|header|my account|modal$"]
         }
       ]
     },
@@ -1437,14 +1482,15 @@
           "key": "eventLabel",
           "type": "string",
           "required": true,
-          "example": "footer",
-          "description": "The referrer: popin, footer, header, etc"
+          "lowercase": true,
+          "validation": ["^pop-?in|footer|header|my account|modal$"]
         },
         {
           "key": "referral",
           "type": "string",
-          "example": "footer",
-          "description": "The referrer: popin, footer, header, etc"
+          "required": true,
+          "lowercase": true,
+          "validation": ["^pop-?in|footer|header|my account|modal$"]
         }
       ]
     },
@@ -1462,27 +1508,28 @@
           "type": "string",
           "required": true,
           "lowercase": true,
-          "validation": ["^account signup::.*$"]
+          "validation": ["^account signup::regular$"]
         },
         {
           "key": "eventLabel",
           "type": "string",
           "required": true,
-          "example": "footer",
-          "description": "The referrer: popin, footer, header, etc"
+          "lowercase": true,
+          "validation": ["^pop-?in|footer|header|my account|modal$"]
         },
         {
           "key": "referral",
           "type": "string",
-          "example": "footer",
-          "description": "The referrer: popin, footer, header, etc"
+          "required": true,
+          "lowercase": true,
+          "validation": ["^pop-?in|footer|header|my account|modal$"]
         },
         {
           "key": "method",
           "type": "string",
           "required": true,
-          "example": "social",
-          "description": "social, regular, etc"
+          "example": "regular",
+          "validation": ["^regular$"]
         }
       ]
     },
@@ -1572,12 +1619,14 @@
           "key": "eventLabel",
           "type": "string",
           "required": true,
+          "lowercase": true,
           "description": "Search keyword/term"
         },
         {
-          "key": "serch_keyword",
+          "key": "search_keyword",
           "type": "string",
           "required": true,
+          "lowercase": true,
           "description": "Search keyword/term"
         },
         {
@@ -1641,12 +1690,14 @@
           "key": "eventLabel",
           "type": "string",
           "required": true,
+          "lowercase": true,
           "description": "The search keyword/term"
         },
         {
           "key": "search_keyword",
           "type": "string",
           "required": true,
+          "lowercase": true,
           "description": "The search keyword/term"
         },
         {
@@ -1677,12 +1728,14 @@
           "key": "eventLabel",
           "type": "string",
           "required": true,
+          "lowercase": true,
           "description": "The search keyword/term"
         },
         {
           "key": "search_keyword",
           "type": "string",
           "required": true,
+          "lowercase": true,
           "description": "The search keyword/term"
         },
         {
@@ -1799,7 +1852,8 @@
           "key": "eventCategory",
           "type": "string",
           "required": true,
-          "description": "The quiz type"
+          "lowercase": true,
+          "validation": ["^((product|routine|gift|fragrance) finder)|teleconsulation|skindr$"]
         },
         {
           "key": "eventAction",
@@ -1817,8 +1871,8 @@
         {
           "key": "quizz_type",
           "type": "string",
-          "required": true,
-          "description": "The quiz type"
+          "lowercase": true,
+          "validation": ["^((product|routine|gift|fragrance) finder)|teleconsulation|skindr$"]
         },
         {
           "key": "quizz_name",
@@ -1868,31 +1922,33 @@
           "key": "eventCategory",
           "type": "string",
           "required": true,
-          "description": "The social network name"
+          "lowercase": true,
+          "validation": ["^youtube|twitter|facebook|instagram|pinterest$"]
         },
         {
           "key": "eventAction",
           "type": "string",
           "required": true,
-          "description": "like, tweet, send, etc"
+          "lowercase": true,
+          "validation": ["like|tweet|send|follow|share"]
         },
         {
           "key": "eventLabel",
           "type": "string",
           "required": true,
-          "description": "The destination URL"
+          "description": "The current page URL"
         },
         {
           "key": "social_network",
           "type": "string",
-          "required": true,
-          "description": "The social network name"
+          "lowercase": true,
+          "validation": ["^youtube|twitter|facebook|instagram|pinterest$"]
         },
         {
           "key": "social_action",
           "type": "string",
-          "required": true,
-          "description": "like, tweet, send, etc"
+          "lowercase": true,
+          "validation": ["like|tweet|send|follow|share"]
         }
       ]
     },
@@ -1910,29 +1966,27 @@
           "key": "eventAction",
           "type": "string",
           "required": true,
-          "example": "social::facebook",
-          "validation": ["^social::.*|regular$"]
+          "validation": ["^regular$"]
         },
         {
           "key": "eventLabel",
           "type": "string",
           "required": true,
-          "example": "footer",
-          "description": "The referrer: popin, footer, header, etc"
+          "lowercase": true,
+          "validation": ["^pop-?in|footer|header|my account|modal$"]
         },
         {
           "key": "referral",
           "type": "string",
           "required": true,
-          "example": "footer",
-          "description": "The referrer: popin, footer, header, etc"
+          "lowercase": true,
+          "validation": ["^pop-?in|footer|header|my account|modal$"]
         },
         {
           "key": "method",
           "type": "string",
           "required": true,
-          "example": "social::facebook",
-          "validation": ["^social::.*|regular$"]
+          "validation": ["^regular$"]
         }
       ]
     },
@@ -1951,8 +2005,7 @@
           "type": "string",
           "required": true,
           "example": "10% viewed",
-          "lowercase": true,
-          "validation": ["^play|pause|video completed|\\d{1,3} viewed|pause|buffering$"]
+          "validation": ["^play|pause|video completed|\\d{1,3}% viewed|pause|buffering$"]
         },
         {
           "key": "eventLabel",
@@ -1965,7 +2018,6 @@
           "type": "string",
           "required": true,
           "example": "10% viewed",
-          "lowercase": true,
           "validation": ["^play|pause|video completed|\\d{1,3} viewed|pause|buffering$"]
         },
         {
@@ -1997,6 +2049,7 @@
           "key": "eventLabel",
           "type": "string",
           "required": true,
+          "lowercase": true,
           "description": "The filter name or sort order"
         },
         {
@@ -2068,6 +2121,7 @@
           "key": "eventLabel",
           "type": "string",
           "required": true,
+          "lowercase": true,
           "description": "The breadcrumb levels separated by ::"
         },
         {
@@ -2081,6 +2135,7 @@
           "key": "breadcrumb",
           "type": "string",
           "required": true,
+          "lowercase": true,
           "description": "The breadcrumb levels separated by ::"
         }
       ]
@@ -2132,7 +2187,7 @@
           "key": "eventLabel",
           "type": "string",
           "required": true,
-          "description": "Number or destination URL"
+          "description": "Phone number or destination URL"
         },
         {
           "key": "click_action",
@@ -2145,13 +2200,14 @@
           "key": "link_url",
           "type": "string",
           "required": true,
-          "description": "Number or destination URL"
+          "description": "Phone number or destination URL"
         },
         {
           "key": "event_detail",
           "type": "string",
           "required": true,
-          "description": "The number"
+          "description": "The phone number",
+          "validation": ["^\\d{1,9}$"]
         }
       ]
     }
