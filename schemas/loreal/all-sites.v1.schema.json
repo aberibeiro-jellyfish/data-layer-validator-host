@@ -2,7 +2,7 @@
   "client": "Loreal",
   "project": "All Websites",
   "version": "1.0",
-  "libVersion": "0.2.1",
+  "libVersion": "0.2.2",
   "modelConsistency":[
     {
       "model": "product",
@@ -260,6 +260,7 @@
     ]
   },
   "initialData":{
+    "events": ["pagedataready", "pageDataReady"],
     "identifiedBy": ["language", "country"],
     "params":[
       {
@@ -299,7 +300,7 @@
         "type": "string",
         "required": true,
         "lowercase": true,
-        "validation": ["^(appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
+        "validation": ["^(homepage|appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
        }
     ]
   },
@@ -326,7 +327,7 @@
           "required": true,
           "type": "string",
           "description": "The page category",
-          "validation": ["^(appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
+          "validation": ["^(homepage|appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
         },   
         {
           "key": "ecommerce",
@@ -497,7 +498,7 @@
           "required": true,
           "type": "string",
           "description": "The page category",
-          "validation": ["^(appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
+          "validation": ["^(homepage|appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
         }, 
         {
           "key": "ecommerce",
@@ -1527,7 +1528,7 @@
           "required": true,
           "lowercase": true,
           "description": "The page category",
-          "validation": ["^(appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
+          "validation": ["^(homepage|appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
         },
         {
           "key": "eventAction",
