@@ -1,6 +1,6 @@
 {
   "client": "Loreal",
-  "project": "All Websites",
+  "name": "All Websites",
   "version": "1.1",
   "libVersion": "0.2.3",
   "modelConsistency":[
@@ -96,6 +96,7 @@
         "type": "string",
         "required": true,
         "example": "30mg",
+        "lowercase": true,
         "description": "The product size or 'none' if not applicable"
       },
       {
@@ -103,6 +104,7 @@
         "type": "string",
         "required": true,
         "example": "beige",
+        "lowercase": true,
         "description": "The product shade or 'none' if not applicable"
       },
       {
@@ -110,12 +112,14 @@
         "type": "string",
         "required": true,
         "example": "lavender",
+        "lowercase": true,
         "description": "The product fragrance of 'none' if not applicable"
       },
       {
         "key": "dimension38",
         "type": "string",
         "required": true,
+        "lowercase": true,
         "example": "5",
         "description": "The product rating or 'none' if not applicable",
         "validation": ["^(\\d(\\.\\d)?|none)$"]
@@ -158,7 +162,7 @@
       {
         "key": "dimension50",
         "type": "decimal2",
-        "required": false,
+        "required": true,
         "example": 25.64,
         "description": "The original price minus discounts"
       },
@@ -310,7 +314,154 @@
           "required": true,
           "lowercase": true,
           "validation": ["^(homepage|appendix|checkout page|content page::article|content page::branding page|content page::service|error page|internal search|my account|product detail page|product selector page|service::coach|service::diagnose|service::guide|service::match|store locator|salon locator)$"]
-         }
+         },
+        {
+          "key": "masterVersion",
+          "type": "string",
+          "required": true,
+          "validation": ["^\\d+(\\.\\d+)?$"]
+        },
+        {
+          "key": "geoIPLocation",
+          "type": "string",
+          "uppercase": true,
+          "required": true
+        },
+        {
+          "key": "siteSection",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "validation": ["^standard site|men site|women site$"]
+        },
+        {
+          "key": "section",
+          "type": "string",
+          "lowercase": true,
+          "required": true
+        },
+        {
+          "key": "category",
+          "type": "string",
+          "lowercase": true,
+          "required": true
+        },
+        {
+          "key": "subCategory",
+          "type": "string",
+          "lowercase": true,
+          "required": true
+        },
+        {
+          "key": "uiInfluencer",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "key": "uiGender",
+          "type": "string",
+          "lowercase": true,
+          "required": true,
+          "validation": ["^f|m|nc$"]
+        },
+        {
+          "key": "uiPostalCode",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "uiCity",
+          "type": "string",
+          "lowercase": true,
+          "required": true
+        },
+        {
+          "key": "uiLoggedStatus",
+          "type": "string",
+          "lowercase": true,
+          "required": true,
+          "validation": ["^social logged|regular logged|not logged$"]
+        },
+        {
+          "key": "uiBirthday",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "uiUser",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "uiEmailId",
+          "type": "string",
+          "lowercase": true,
+          "required": true
+        },
+        {
+          "key": "loyaltyTotalUserPoints",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "key": "rfmEmail",
+          "type": "string",
+          "required": false
+        },
+        {
+          "key": "breadCrumb",
+          "type": "string",
+          "lowercase": true,
+          "required": true
+        },
+        {
+          "key": "uiLoyaltyStatus",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "key": "category",
+          "type": "string",
+          "required": false
+        },
+        {
+          "key": "abTest",
+          "type": "string",
+          "required": false
+        },
+        {
+          "key": "ecommerceStatus",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "ecommerceStatus": ["^viewer|cart abandoner|first buyer|return buyer$"]
+        },
+        {
+          "key": "uiCartAmount",
+          "type": "decimal2",
+          "required": true
+        },
+        {
+          "key": "cartContent",
+          "type": "string",
+          "lowercase": true,
+          "required": true
+        },
+        {
+          "key": "uiProfessionalStatus",
+          "type": "boolean",
+          "required": true
+        },
+        {
+          "key": "adsBlocked",
+          "type": "string",
+          "required": false
+        },
+        {
+          "key": "engagementScore",
+          "type": "integer",
+          "required": false
+        }
       ]
     },
     {
