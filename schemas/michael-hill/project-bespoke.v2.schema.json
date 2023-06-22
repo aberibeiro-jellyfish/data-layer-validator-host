@@ -1,0 +1,225 @@
+{
+  "client": "Michael Hill",
+  "name": "Project Bespoke",
+  "version": "2.0",
+  "templateVersion": "1.0",
+  "libVersion": "0.2.4",
+  "modelConsistency":[
+    {
+      "model": "product",
+      "unique": ["item_id"],
+      "params": ["item_category", "item_brand"]
+    }
+  ],
+  "models": {
+    "user": [
+      {
+        "key": "userId",
+        "type": "string",
+        "required": false,
+        "example": "5345345",
+        "description": "Unique user identifier"
+      },
+      {
+        "key": "loggedIn",
+        "type": "boolean",
+        "required": false,
+        "example": false,
+        "description": "Is the user logged in? If omitted will assume false"
+      },
+      {
+        "key": "memberType",
+        "type": "string",
+        "required": true,
+        "example": "premium",
+        "validation": ["guest|member"],
+        "description": "If multiple member types, specify which here"
+      }
+    ],
+    "product": [
+      {
+        "key": "item_id",
+        "type": "string",
+        "required": true,
+        "example": "5345345",
+        "description": "Unique identifier for the product, e.g. SKU"
+      },
+      {
+        "key": "item_name",
+        "type": "string",
+        "required": true,
+        "example": "Bath towels",
+        "description": "Human readable name of the product"
+      },
+      {
+        "key": "item_category",
+        "type": "string",
+        "required": true,
+        "example": "Shoes/Mens Shoes",
+        "description": "The category or slash separated categories hierarchy of the product"
+      },
+      {
+        "key": "item_brand",
+        "type": "string",
+        "required": false,
+        "example": "Michael Hill",
+        "description": "The product brand"
+      },
+      {
+        "key": "quantity",
+        "type": "integer",
+        "required": true,
+        "example": 1,
+        "description": "The quantity being added/removed from cart, or purchased"
+      },
+      {
+        "key": "index",
+        "type": "integer",
+        "required": false,
+        "example": 3,
+        "description": "If within a list context, the position of the product starting at 1"
+      },
+      {
+        "key": "price",
+        "type": "decimal2",
+        "required": true,
+        "example": 99.99,
+        "description": "The price of the product (that would will be charged to the customer)"
+      },
+      {
+        "key": "affiliation",
+        "type": "string",
+        "required": true,
+        "validation": ["michael hill bespoke"],
+        "example": "michael hill bespoke"
+      },
+      {
+        "key": "discount",
+        "type": "decimal2",
+        "required": false,
+        "example": 9.99,
+        "description": "Product level discount, if applicable"
+      }
+    ]
+  },
+  "events": [
+    {
+      "name": "page view",
+      "identify": [{"key": "event", "matcher": "custom.content.view"}],
+      "description":"When a page is viewed. This could be a standard page view when the browser has (re)loaded a page, but also virtual pageview if the website is \"Single Page Application\" when navigating between pages.",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "websiteVersion",
+          "type": "string",
+          "required": false,
+          "example": "12.43",
+          "desciprion": "The website release version"
+        },
+        {
+          "key": "platformName",
+          "type": "string",
+          "required": false,
+          "example": "nuxtjs",
+          "description": "The name of the platform this page is built in"
+        },
+        {
+          "key": "websiteEnvironment",
+          "type": "string",
+          "required": false,
+          "example": "test",
+          "description": "production, dev, uat, etc"
+        },
+        {
+          "key": "pageType",
+          "type": "string",
+          "required": true,
+          "example": "content",
+          "description": "The content/template type of the page"
+        },
+        {
+          "key": "pageTitle",
+          "type": "string",
+          "required": true,
+          "example": "about us",
+          "description": "The page title without brand prefix"
+        },
+        {
+          "key": "user",
+          "type": "object",
+          "model": "user",
+          "required": true,
+          "description": "User info"
+        }
+      ]
+    },
+    {
+      "name": "purchase",
+      "identify": [{"key": "event", "matcher": "purchase"}],
+      "description": "When a user has successfully completed a purchase.<br>Ideally this would be triggered before landing on the thank you page because repeat visits to thank you page may cause duplicate transaction hits.",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "required": true
+        },
+        {
+          "key": "transaction_id",
+          "type": "string",
+          "required": true,
+          "description": "The unique transaction/order ID",
+          "example": "BSP-323542"
+        },
+        {
+          "key": "value",
+          "type": "decimal2",
+          "required": true,
+          "example": 213.99,
+          "description": "The order total including tax and shipping"
+        },
+        {
+          "key": "tax",
+          "type": "decimal2",
+          "required": true,
+          "example": 20.34,
+          "description": "The tax portion of the order total"
+        },
+        {
+          "key": "shipping",
+          "type": "decimal2",
+          "required": true,
+          "example": 10.99,
+          "description": "The shipping portion of the order total"
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "validation": ["aud|nzd|cad"],
+          "required": true,
+          "example": "AUD",
+          "uppercase": true,
+          "description": "The currency code of the order"
+        },
+        {
+          "key": "coupon",
+          "type": "string",
+          "required": false,
+          "example": "SUM334",
+          "description": "The order level coupons, comma separated, if applicable"
+        },
+        {
+          "key": "items",
+          "type": "array",
+          "required": true,
+          "itemType": "object",
+          "model": "product",
+          "description": "All order products"
+        }
+      ]
+    }
+  ]
+}
