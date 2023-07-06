@@ -114,6 +114,7 @@
           "key": "event",
           "type": "string",
           "required": true,
+          "example": "page_view",
           "validation":["^page_view$"]
         },
         {
@@ -169,6 +170,7 @@
           "key": "event",
           "type": "string",
           "required": true,
+          "example": "purchase",
           "validation":["^purchase$"]
         },
         {
