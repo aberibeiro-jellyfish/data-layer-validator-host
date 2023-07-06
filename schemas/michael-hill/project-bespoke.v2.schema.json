@@ -1,7 +1,7 @@
 {
   "client": "Michael Hill",
-  "name": "Project Bespoke",
-  "version": "2.0",
+  "name": "TenSevenSeven (Project Bespoke)",
+  "version": "2.1",
   "templateVersion": "1.0",
   "libVersion": "0.2.4",
   "ignoredEvents": ["gtm\\..*"],
@@ -92,8 +92,8 @@
         "key": "affiliation",
         "type": "string",
         "required": true,
-        "validation": ["michael hill bespoke"],
-        "example": "michael hill bespoke"
+        "validation": ["tensevenseven"],
+        "example": "tensevenseven"
       },
       {
         "key": "discount",
