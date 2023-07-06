@@ -107,7 +107,7 @@
   "events": [
     {
       "name": "page view",
-      "identify": [{"key": "event", "matcher": "custom.content.view"}],
+      "identify": [{"key": "event", "matcher": "page_view"}],
       "description":"When a page is viewed. This could be a standard page view when the browser has (re)loaded a page, but also virtual pageview if the website is \"Single Page Application\" when navigating between pages.",
       "params": [
         {
