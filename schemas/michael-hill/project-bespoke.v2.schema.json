@@ -107,13 +107,14 @@
   "events": [
     {
       "name": "page view",
-      "identify": [{"key": "event", "matcher": "page_view"}],
+      "identify": [{"key": "event", "matcher": "^page_view$"}],
       "description":"When a page is viewed. This could be a standard page view when the browser has (re)loaded a page, but also virtual pageview if the website is \"Single Page Application\" when navigating between pages.",
       "params": [
         {
           "key": "event",
           "type": "string",
-          "required": true
+          "required": true,
+          "validation":["^page_view$"]
         },
         {
           "key": "websiteVersion",
@@ -161,13 +162,14 @@
     },
     {
       "name": "purchase",
-      "identify": [{"key": "event", "matcher": "purchase"}],
+      "identify": [{"key": "event", "matcher": "^purchase$"}],
       "description": "When a user has successfully completed a purchase.<br>Ideally this would be triggered before landing on the thank you page because repeat visits to thank you page may cause duplicate transaction hits.",
       "params": [
         {
           "key": "event",
           "type": "string",
-          "required": true
+          "required": true,
+          "validation":["^purchase$"]
         },
         {
           "key": "transaction_id",
