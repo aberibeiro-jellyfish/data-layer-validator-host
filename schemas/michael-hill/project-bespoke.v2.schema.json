@@ -16,7 +16,7 @@
   "models": {
     "user": [
       {
-        "key": "userId",
+        "key": "id",
         "type": "string",
         "required": false,
         "example": "5345345",
@@ -30,12 +30,27 @@
         "description": "Is the user logged in? If omitted will assume false"
       },
       {
-        "key": "memberType",
+        "key": "type",
         "type": "string",
         "required": true,
         "example": "premium",
         "validation": ["guest|member"],
+        "lowercase": true,
         "description": "If multiple member types, specify which here"
+      },
+      {
+        "key": "email",
+        "type": "string",
+        "required": false,
+        "example": "user@gmail.com",
+        "description": "The user's email address, if known"
+      },
+      {
+        "key": "name",
+        "type": "string",
+        "required": false,
+        "example": "John Doe",
+        "description": "The user's name, if known"
       }
     ],
     "product": [
@@ -101,6 +116,110 @@
         "required": false,
         "example": 9.99,
         "description": "Product level discount, if applicable"
+      },
+      {
+        "key": "imageUrl",
+        "type": "string",
+        "required": true,
+        "validation": ["^https:\\/\\/"],
+        "example": "https://www.tensevenseven.com/media/products/2735432.jpg",
+        "description": "An absolute URL to the primary image of the product"
+      },
+      {
+        "key": "url",
+        "type": "string",
+        "required": true,
+        "validation": ["^https:\\/\\/"],
+        "example": "https://www.tensevenseven.com/start-creating?setting=1900534",
+        "description": "An absolute URL to detail page for the product"
+      }
+    ],
+    "content":[
+      {
+        "key": "type",
+        "type": "string",
+        "required": true,
+        "example": "homepage",
+        "description": "The content/template type of the page"
+      },
+      {
+        "key": "title",
+        "type": "string",
+        "required": true,
+        "example": "about us",
+        "description": "The page title without brand prefix"
+      },
+      {
+        "key": "version",
+        "type": "string",
+        "required": false,
+        "example": "12.43",
+        "desciprion": "The website release version"
+      },
+      {
+        "key": "platformName",
+        "type": "string",
+        "required": false,
+        "example": "nuxtjs",
+        "lowercase": true,
+        "description": "The name of the platform this page is built in"
+      },
+      {
+        "key": "websiteEnvironment",
+        "type": "string",
+        "required": false,
+        "lowercase": true,
+        "example": "test",
+        "description": "production, dev, uat, etc"
+      },
+      {
+        "key": "language",
+        "type": "string",
+        "required": true,
+        "example": "english",
+        "lowercase": true,
+        "description": "The language the page is served in"
+      },
+      {
+        "key": "currency",
+        "type": "string",
+        "required": true,
+        "example": "AUD",
+        "uppercase": true,
+        "validation": ["AUD|NZD|CAD"],
+        "description": "The currency used to purchase on the website"
+      },
+      {
+        "key": "languageISO",
+        "type": "string",
+        "required": true,
+        "example": "en-au",
+        "lowercase": true,
+        "description": "The language ISO code the page is served in"
+      }
+    ],
+    "cart": [
+      {
+        "key": "id",
+        "type": "string",
+        "required": false,
+        "example": "C23343",
+        "description": "The unique ID of the cart, if available"
+      },
+      {
+        "key": "value",
+        "type": "decimal2",
+        "required": true,
+        "example": "120.34",
+        "description": "The current total value of the cart, even if this is 0"
+      },
+      {
+        "key": "items",
+        "type": "array",
+        "required": false,
+        "itemType": "object",
+        "model": "product",
+        "description": "All cart products"
       }
     ]
   },
@@ -118,46 +237,25 @@
           "validation":["^page_view$"]
         },
         {
-          "key": "websiteVersion",
-          "type": "string",
-          "required": false,
-          "example": "12.43",
-          "desciprion": "The website release version"
-        },
-        {
-          "key": "platformName",
-          "type": "string",
-          "required": false,
-          "example": "nuxtjs",
-          "description": "The name of the platform this page is built in"
-        },
-        {
-          "key": "websiteEnvironment",
-          "type": "string",
-          "required": false,
-          "example": "test",
-          "description": "production, dev, uat, etc"
-        },
-        {
-          "key": "pageType",
-          "type": "string",
-          "required": true,
-          "example": "content",
-          "description": "The content/template type of the page"
-        },
-        {
-          "key": "pageTitle",
-          "type": "string",
-          "required": true,
-          "example": "about us",
-          "description": "The page title without brand prefix"
-        },
-        {
           "key": "user",
           "type": "object",
           "model": "user",
           "required": true,
           "description": "User info"
+        },
+        {
+          "key": "content",
+          "type": "object",
+          "model": "content",
+          "required": true,
+          "description": "Content/webpage info"
+        },
+        {
+          "key": "cart",
+          "type": "object",
+          "model": "cart",
+          "required": true,
+          "description": "Current cart info"
         }
       ]
     },
@@ -204,7 +302,7 @@
         {
           "key": "currency",
           "type": "string",
-          "validation": ["aud|nzd|cad"],
+          "validation": ["AUD|NZD|CAD"],
           "required": true,
           "example": "AUD",
           "uppercase": true,
