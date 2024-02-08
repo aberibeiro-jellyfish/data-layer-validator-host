@@ -3,7 +3,7 @@
   "name": "TenSevenSeven (Project Bespoke)",
   "version": "2.1",
   "templateVersion": "1.0",
-  "libVersion": "0.2.4",
+  "libVersion": "0.3.0",
   "ignoredEvents": ["gtm\\..*"],
   "ignoredParams": ["gtm.uniqueEventId"],
   "modelConsistency":[
