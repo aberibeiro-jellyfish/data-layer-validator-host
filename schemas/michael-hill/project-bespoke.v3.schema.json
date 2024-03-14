@@ -12,6 +12,37 @@
   "ignoredParams": [
     "gtm.uniqueEventId"
   ],
+
+  "formSettings":{
+    "params":{
+      "id": "form_name",
+      "stepName": "step_name",
+      "inputElement": "input_element",
+      "fieldName": "field_name",
+      "fieldValue": "field_value"
+    },
+
+    "events":{
+      "start": "form_start",
+      "abandon": "form_abandon",
+      "step": "form_step",
+      "field": "form_field",
+      "error": "form_error", 
+      "submit": "form_submit",
+      "complete": "form_complete"
+    },
+
+    "forms":[
+      {
+        "id": "ring designer",
+        "steps": ["edit ring", "preview ring"]
+      },
+      {
+        "id": "checkout",
+        "steps": ["contact", "delivery", "payment"]
+      }
+    ]
+  },
   "models": {
     "user": [
       {
@@ -747,7 +778,7 @@
           "description": "The unique name of the form step",
           "example": "edit ring",
           "validation": [
-            "^(edit ring|preview ring)$"
+            "^(edit ring|preview ring|contact|delivery|payment)$"
           ]
         }
       ]
@@ -789,7 +820,7 @@
           "description": "The unique name of the form step",
           "example": "edit ring",
           "validation": [
-            "^(edit ring|preview ring)$"
+            "^(edit ring|preview ring|contact|delivery|payment)$"
           ]
         },
         {
@@ -797,9 +828,218 @@
           "key": "field_name",
           "required": true,
           "description": "The unique name of the form field",
-          "example": "setting",
+          "example": "metal",
           "validation": [
-            "^(setting|metal|diamond|custom name|size)$"
+            "^(setting|metal|diamond|custom name|size|email|phone|delivery option|delivery first name|delivery last name|delivery address|delivery building name|delivery suburb|delivery state|delivery postcode|delivery country|billing first name|billing last name|billing address|billing building name|billing suburb|billing state|billing postcode|billing country|payment type|billing same as delivery)$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "field_value",
+          "required": true,
+          "description": "The value of the field, but only if deemed to be non PII, in which case pass '[redacted]' as the value",
+          "example": "silver"
+        }
+      ]
+    },
+    {
+      "name": "form error",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "form_error"
+        }
+      ],
+      "description": "When a field validation or other error is shown to the user relating to the form",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "form_error",
+          "required": true,
+          "validation": [
+            "^form_error$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "form_name",
+          "required": true,
+          "description": "The unique name of the form",
+          "example": "ring designer",
+          "validation": [
+            "^(ring designer|checkout)$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "step_name",
+          "required": true,
+          "description": "The unique name of the form step",
+          "example": "edit ring",
+          "validation": [
+            "^(edit ring|preview ring|contact|delivery|payment)$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "field_name",
+          "required": false,
+          "description": "The unique name of the form field",
+          "example": "metal",
+          "validation": [
+            "^(setting|metal|diamond|custom name|size|email|phone|delivery option|delivery first name|delivery last name|delivery address|delivery building name|delivery suburb|delivery state|delivery postcode|delivery country|billing first name|billing last name|billing address|billing building name|billing suburb|billing state|billing postcode|billing country|payment type|billing same as delivery)$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "field_value",
+          "required": false,
+          "description": "The value of the field, but only if deemed to be non PII, in which case pass '[redacted]' as the value",
+          "example": "silver"
+        },
+        {
+          "type": "string",
+          "key": "error_message",
+          "required": true,
+          "description": "The error message text as shown to the user",
+          "example": "Please enter your email address"
+        }
+      ]
+    },
+    {
+      "name": "form submit",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "form_submit"
+        }
+      ],
+      "description": "When the user attempts to submit the form, even if there are validation or other errors causing it to fail",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "form_submit",
+          "required": true,
+          "validation": [
+            "^form_submit$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "form_name",
+          "required": true,
+          "description": "The unique name of the form",
+          "example": "ring designer",
+          "validation": [
+            "^(ring designer|checkout)$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "step_name",
+          "required": true,
+          "description": "The unique name of the form step",
+          "example": "edit ring",
+          "validation": [
+            "^(edit ring|preview ring|contact|delivery|payment)$"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "form complete",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "form_complete"
+        }
+      ],
+      "description": "When the user succesfully submits the form without errors",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "form_complete",
+          "required": true,
+          "validation": [
+            "^form_complete$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "form_name",
+          "required": true,
+          "description": "The unique name of the form",
+          "example": "ring designer",
+          "validation": [
+            "^(ring designer|checkout)$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "step_name",
+          "required": true,
+          "description": "The unique name of the form step",
+          "example": "edit ring",
+          "validation": [
+            "^(edit ring|preview ring|contact|delivery|payment)$"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "form abandon",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "form_abandon"
+        }
+      ],
+      "description": "If the user abandons the form mid way, by navigating to a different page, away from the website, explicit cancel action, etc",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "form_abandon",
+          "required": true,
+          "validation": [
+            "^form_abandon$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "form_name",
+          "required": true,
+          "description": "The unique name of the form",
+          "example": "ring designer",
+          "validation": [
+            "^(ring designer|checkout)$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "step_name",
+          "required": true,
+          "description": "The unique name of the form step",
+          "example": "edit ring",
+          "validation": [
+            "^(edit ring|preview ring|contact|delivery|payment)$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "field_name",
+          "required": false,
+          "description": "The unique name of the form field - the last one that was interacted with prior to form abandon, if applicable",
+          "example": "metal",
+          "validation": [
+            "^(setting|metal|diamond|custom name|size|email|phone|delivery option|delivery first name|delivery last name|delivery address|delivery building name|delivery suburb|delivery state|delivery postcode|delivery country|billing first name|billing last name|billing address|billing building name|billing suburb|billing state|billing postcode|billing country|payment type|billing same as delivery)$"
           ]
         }
       ]
