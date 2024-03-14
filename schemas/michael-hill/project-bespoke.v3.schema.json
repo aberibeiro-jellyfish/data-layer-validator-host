@@ -308,78 +308,48 @@
       ]
     },
     {
-      "name": "purchase",
+      "name": "view item",
       "identify": [
         {
           "key": "event",
-          "matcher": "^purchase$"
+          "matcher": "view_item"
         }
       ],
-      "description": "When a user has successfully completed a purchase.<br>Ideally this would be triggered before landing on the thank you page because repeat visits to thank you page may cause duplicate transaction hits.",
+      "description": "When viewing the Preview step of the ring, where the size select and Save button are.",
       "params": [
         {
           "key": "event",
           "type": "string",
-          "required": true,
-          "example": "purchase",
           "lowercase": true,
+          "example": "view_item",
+          "required": true,
           "validation": [
-            "^purchase$"
+            "^view_item$"
           ]
         },
         {
-          "key": "transaction_id",
           "type": "string",
-          "required": true,
-          "description": "The unique transaction/order ID",
-          "example": "BSP-323542"
-        },
-        {
-          "key": "value",
-          "type": "decimal2",
-          "required": true,
-          "example": 213.99,
-          "description": "The order total including tax and shipping"
-        },
-        {
-          "key": "tax",
-          "type": "decimal2",
-          "required": true,
-          "example": 20.34,
-          "description": "The tax portion of the order total"
-        },
-        {
-          "key": "shipping",
-          "type": "decimal2",
-          "required": true,
-          "example": 10.99,
-          "description": "The shipping portion of the order total"
-        },
-        {
+          "itemType": "string",
           "key": "currency",
-          "type": "string",
-          "validation": [
-            "AUD|NZD|CAD"
-          ],
           "required": true,
-          "example": "AUD",
-          "uppercase": true,
-          "description": "The currency code of the order"
+          "description": "Currency code",
+          "example": "AUD"
         },
         {
-          "key": "coupon",
-          "type": "string",
-          "required": false,
-          "example": "SUM334",
-          "description": "The order level coupons, comma separated, if applicable"
+          "type": "decimal2",
+          "itemType": "string",
+          "key": "value",
+          "required": true,
+          "description": "Dollar amount",
+          "example": 30
         },
         {
-          "key": "items",
           "type": "array",
-          "required": true,
           "itemType": "object",
+          "key": "items",
+          "required": true,
           "model": "product",
-          "description": "All order products"
+          "description": "The product (ring) being viewed"
         }
       ]
     },
@@ -611,52 +581,6 @@
       ]
     },
     {
-      "name": "view item",
-      "identify": [
-        {
-          "key": "event",
-          "matcher": "view_item"
-        }
-      ],
-      "description": "When viewing the Preview step of the ring, where the size select and Save button are.",
-      "params": [
-        {
-          "key": "event",
-          "type": "string",
-          "lowercase": true,
-          "example": "view_item",
-          "required": true,
-          "validation": [
-            "^view_item$"
-          ]
-        },
-        {
-          "type": "string",
-          "itemType": "string",
-          "key": "currency",
-          "required": true,
-          "description": "Currency code",
-          "example": "AUD"
-        },
-        {
-          "type": "decimal2",
-          "itemType": "string",
-          "key": "value",
-          "required": true,
-          "description": "Dollar amount",
-          "example": 30
-        },
-        {
-          "type": "array",
-          "itemType": "object",
-          "key": "items",
-          "required": true,
-          "model": "product",
-          "description": "The product (ring) being viewed"
-        }
-      ]
-    },
-    {
       "name": "begin checkout",
       "identify": [
         {
@@ -706,6 +630,204 @@
           "required": true,
           "model": "product",
           "description": "The products in the cart"
+        }
+      ]
+    },
+    {
+      "name": "add shipping info",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "add_shipping_info"
+        }
+      ],
+      "description": "When the user completes the delivery step of checkout",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "add_shipping_info",
+          "required": true,
+          "validation": [
+            "^add_shipping_info$"
+          ]
+        },
+        {
+          "type": "string",
+          "itemType": "string",
+          "key": "currency",
+          "required": true,
+          "description": "Currency code",
+          "example": "AUD"
+        },
+        {
+          "type": "decimal2",
+          "itemType": "string",
+          "key": "value",
+          "required": true,
+          "description": "Dollar amount",
+          "example": 30
+        },
+        {
+          "type": "string",
+          "key": "coupon",
+          "required": false,
+          "description": "Order level coupon codes, comma separated, if applicable",
+          "example": "OFF20"
+        },
+        {
+          "type": "string",
+          "key": "shipping_tier",
+          "required": false,
+          "description": "The shipping tier/type selected by the user",
+          "example": "private courier",
+          "validation":["^private courier$"]
+        },
+        {
+          "type": "array",
+          "itemType": "object",
+          "key": "items",
+          "required": true,
+          "model": "product",
+          "description": "The products in the cart"
+        }
+      ]
+    },
+    {
+      "name": "add payment info",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "add_payment_info"
+        }
+      ],
+      "description": "When the user completes the payment step of checkout",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "add_payment_info",
+          "required": true,
+          "validation": [
+            "^add_payment_info$"
+          ]
+        },
+        {
+          "type": "string",
+          "itemType": "string",
+          "key": "currency",
+          "required": true,
+          "description": "Currency code",
+          "example": "AUD"
+        },
+        {
+          "type": "decimal2",
+          "itemType": "string",
+          "key": "value",
+          "required": true,
+          "description": "Dollar amount",
+          "example": 30
+        },
+        {
+          "type": "string",
+          "key": "coupon",
+          "required": false,
+          "description": "Order level coupon codes, comma separated, if applicable",
+          "example": "OFF20"
+        },
+        {
+          "type": "string",
+          "key": "payment_type",
+          "required": false,
+          "description": "The payment method/type selected by the user",
+          "example": "credit card",
+          "validation":["^(credit card|bank transfer)$"]
+        },
+        {
+          "type": "array",
+          "itemType": "object",
+          "key": "items",
+          "required": true,
+          "model": "product",
+          "description": "The products in the cart"
+        }
+      ]
+    },
+    {
+      "name": "purchase",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "^purchase$"
+        }
+      ],
+      "description": "When a user has successfully completed a purchase.<br>Ideally this would be triggered before landing on the thank you page because repeat visits to thank you page may cause duplicate transaction hits.",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "required": true,
+          "example": "purchase",
+          "lowercase": true,
+          "validation": [
+            "^purchase$"
+          ]
+        },
+        {
+          "key": "transaction_id",
+          "type": "string",
+          "required": true,
+          "description": "The unique transaction/order ID",
+          "example": "BSP-323542"
+        },
+        {
+          "key": "value",
+          "type": "decimal2",
+          "required": true,
+          "example": 213.99,
+          "description": "The order total including tax and shipping"
+        },
+        {
+          "key": "tax",
+          "type": "decimal2",
+          "required": true,
+          "example": 20.34,
+          "description": "The tax portion of the order total"
+        },
+        {
+          "key": "shipping",
+          "type": "decimal2",
+          "required": true,
+          "example": 10.99,
+          "description": "The shipping portion of the order total"
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "validation": [
+            "AUD|NZD|CAD"
+          ],
+          "required": true,
+          "example": "AUD",
+          "uppercase": true,
+          "description": "The currency code of the order"
+        },
+        {
+          "key": "coupon",
+          "type": "string",
+          "required": false,
+          "example": "SUM334",
+          "description": "The order level coupons, comma separated, if applicable"
+        },
+        {
+          "key": "items",
+          "type": "array",
+          "required": true,
+          "itemType": "object",
+          "model": "product",
+          "description": "All order products"
         }
       ]
     },
