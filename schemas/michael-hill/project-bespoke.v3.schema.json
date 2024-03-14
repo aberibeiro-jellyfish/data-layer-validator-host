@@ -1,0 +1,821 @@
+{
+  "templateVersion": "1.0",
+  "libVersion": "0.3.0",
+  "name": "TenSevenSeven (Project Bespoke)",
+  "client": "Michael Hill",
+  "version": "3",
+  "flagAsianChars": false,
+  "downloadableReport": false,
+  "ignoredEvents": [
+    "gtm\\..*"
+  ],
+  "ignoredParams": [
+    "gtm.uniqueEventId"
+  ],
+  "models": {
+    "user": [
+      {
+        "key": "id",
+        "type": "string",
+        "required": false,
+        "example": "5345345",
+        "description": "Unique user identifier"
+      },
+      {
+        "key": "loggedIn",
+        "type": "boolean",
+        "required": false,
+        "example": false,
+        "description": "Is the user logged in? If omitted will assume false"
+      },
+      {
+        "key": "type",
+        "type": "string",
+        "required": true,
+        "example": "premium",
+        "validation": [
+          "guest|member"
+        ],
+        "lowercase": true,
+        "description": "If multiple member types, specify which here"
+      },
+      {
+        "key": "email",
+        "type": "string",
+        "required": false,
+        "example": "user@gmail.com",
+        "description": "The user's email address, if known"
+      },
+      {
+        "key": "name",
+        "type": "string",
+        "required": false,
+        "example": "John Doe",
+        "description": "The user's name, if known"
+      }
+    ],
+    "product": [
+      {
+        "key": "item_id",
+        "type": "string",
+        "required": true,
+        "example": "5345345",
+        "description": "Unique identifier for the product, e.g. SKU"
+      },
+      {
+        "key": "item_name",
+        "type": "string",
+        "required": true,
+        "example": "Bath towels",
+        "description": "Human readable name of the product"
+      },
+      {
+        "key": "item_category",
+        "type": "string",
+        "required": true,
+        "example": "Shoes/Mens Shoes",
+        "description": "The category or slash separated categories hierarchy of the product"
+      },
+      {
+        "key": "item_brand",
+        "type": "string",
+        "required": false,
+        "example": "Michael Hill",
+        "description": "The product brand"
+      },
+      {
+        "key": "quantity",
+        "type": "integer",
+        "required": true,
+        "example": 1,
+        "description": "The quantity being added/removed from cart/wishlist, or being purchased"
+      },
+      {
+        "key": "index",
+        "type": "integer",
+        "required": false,
+        "example": 3,
+        "description": "If within a list context, the position of the product starting at 1"
+      },
+      {
+        "key": "price",
+        "type": "decimal2",
+        "required": true,
+        "example": 99.99,
+        "description": "The price of the product (that will be charged to the customer at present time)"
+      },
+      {
+        "key": "affiliation",
+        "type": "string",
+        "required": true,
+        "validation": [
+          "tensevenseven"
+        ],
+        "example": "tensevenseven"
+      },
+      {
+        "key": "discount",
+        "type": "decimal2",
+        "required": false,
+        "example": 9.99,
+        "description": "Product level discount, if applicable"
+      },
+      {
+        "key": "imageUrl",
+        "type": "string",
+        "required": true,
+        "validation": [
+          "^https:\\/\\/"
+        ],
+        "example": "https://www.tensevenseven.com/media/products/2735432.jpg",
+        "description": "An absolute URL to the primary image of the product"
+      },
+      {
+        "key": "url",
+        "type": "string",
+        "required": true,
+        "validation": [
+          "^https:\\/\\/"
+        ],
+        "example": "https://www.tensevenseven.com/start-creating?setting=1900534",
+        "description": "An absolute URL to detail page for the product"
+      }
+    ],
+    "content": [
+      {
+        "key": "type",
+        "type": "string",
+        "required": true,
+        "example": "homepage",
+        "description": "The content/template type of the page"
+      },
+      {
+        "key": "title",
+        "type": "string",
+        "required": true,
+        "example": "about us",
+        "description": "The page title without brand prefix"
+      },
+      {
+        "key": "version",
+        "type": "string",
+        "required": false,
+        "example": "12.43",
+        "desciprion": "The website release version"
+      },
+      {
+        "key": "platformName",
+        "type": "string",
+        "required": false,
+        "example": "nuxtjs",
+        "lowercase": true,
+        "description": "The name of the platform this page is built in"
+      },
+      {
+        "key": "websiteEnvironment",
+        "type": "string",
+        "required": false,
+        "lowercase": true,
+        "example": "test",
+        "description": "production, dev, uat, etc"
+      },
+      {
+        "key": "language",
+        "type": "string",
+        "required": true,
+        "example": "english",
+        "lowercase": true,
+        "description": "The language the page is served in"
+      },
+      {
+        "key": "currency",
+        "type": "string",
+        "required": true,
+        "example": "AUD",
+        "uppercase": true,
+        "validation": [
+          "AUD|NZD|CAD"
+        ],
+        "description": "The currency used to purchase on the website"
+      },
+      {
+        "key": "languageISO",
+        "type": "string",
+        "required": true,
+        "example": "en-au",
+        "lowercase": true,
+        "description": "The language ISO code the page is served in"
+      }
+    ],
+    "cart": [
+      {
+        "key": "id",
+        "type": "string",
+        "required": false,
+        "example": "C23343",
+        "description": "The unique ID of the cart, if available"
+      },
+      {
+        "key": "value",
+        "type": "decimal2",
+        "required": true,
+        "example": "120.34",
+        "description": "The current total value of the cart, even if this is 0"
+      },
+      {
+        "key": "items",
+        "type": "array",
+        "required": false,
+        "itemType": "object",
+        "model": "product",
+        "description": "All cart products"
+      }
+    ]
+  },
+  "events": [
+    {
+      "name": "page view",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "^page_view$"
+        }
+      ],
+      "description": "When a page is viewed. This could be a standard page view when the browser has (re)loaded a page, but also virtual pageview if the website is \"Single Page Application\" when navigating between pages.",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "required": true,
+          "example": "page_view",
+          "lowercase": true,
+          "validation": [
+            "^page_view$"
+          ]
+        },
+        {
+          "key": "user",
+          "type": "object",
+          "model": "user",
+          "required": true,
+          "description": "User info"
+        },
+        {
+          "key": "content",
+          "type": "object",
+          "model": "content",
+          "required": true,
+          "description": "Content/webpage info"
+        },
+        {
+          "key": "cart",
+          "type": "object",
+          "model": "cart",
+          "required": true,
+          "description": "Current cart info"
+        }
+      ]
+    },
+    {
+      "name": "purchase",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "^purchase$"
+        }
+      ],
+      "description": "When a user has successfully completed a purchase.<br>Ideally this would be triggered before landing on the thank you page because repeat visits to thank you page may cause duplicate transaction hits.",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "required": true,
+          "example": "purchase",
+          "lowercase": true,
+          "validation": [
+            "^purchase$"
+          ]
+        },
+        {
+          "key": "transaction_id",
+          "type": "string",
+          "required": true,
+          "description": "The unique transaction/order ID",
+          "example": "BSP-323542"
+        },
+        {
+          "key": "value",
+          "type": "decimal2",
+          "required": true,
+          "example": 213.99,
+          "description": "The order total including tax and shipping"
+        },
+        {
+          "key": "tax",
+          "type": "decimal2",
+          "required": true,
+          "example": 20.34,
+          "description": "The tax portion of the order total"
+        },
+        {
+          "key": "shipping",
+          "type": "decimal2",
+          "required": true,
+          "example": 10.99,
+          "description": "The shipping portion of the order total"
+        },
+        {
+          "key": "currency",
+          "type": "string",
+          "validation": [
+            "AUD|NZD|CAD"
+          ],
+          "required": true,
+          "example": "AUD",
+          "uppercase": true,
+          "description": "The currency code of the order"
+        },
+        {
+          "key": "coupon",
+          "type": "string",
+          "required": false,
+          "example": "SUM334",
+          "description": "The order level coupons, comma separated, if applicable"
+        },
+        {
+          "key": "items",
+          "type": "array",
+          "required": true,
+          "itemType": "object",
+          "model": "product",
+          "description": "All order products"
+        }
+      ]
+    },
+    {
+      "name": "add to cart",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "add_to_cart"
+        }
+      ],
+      "description": "When a user adds one of their saved rings to the cart",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "required": true,
+          "lowercase": true,
+          "example": "add_to_cart",
+          "validation": [
+            "^add_to_cart$"
+          ]
+        },
+        {
+          "type": "string",
+          "itemType": "string",
+          "key": "currency",
+          "required": true,
+          "example": "AUD",
+          "description": "Currency code"
+        },
+        {
+          "type": "decimal2",
+          "itemType": "string",
+          "key": "value",
+          "required": true,
+          "example": 30,
+          "description": "Dollar amount"
+        },
+        {
+          "type": "array",
+          "itemType": "object",
+          "key": "items",
+          "model": "product",
+          "required": true,
+          "description": "Products being added to cart"
+        }
+      ]
+    },
+    {
+      "name": "remove from cart",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "remove_from_cart"
+        }
+      ],
+      "description": "When a user removes a ring from the cart",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "remove_from_cart",
+          "required": true,
+          "validation": [
+            "^remove_from_cart$"
+          ]
+        },
+        {
+          "type": "string",
+          "itemType": "string",
+          "key": "currency",
+          "required": true,
+          "description": "Currency code",
+          "example": "AUD"
+        },
+        {
+          "type": "decimal2",
+          "itemType": "string",
+          "key": "value",
+          "required": true,
+          "description": "Dollar amount",
+          "example": 30
+        },
+        {
+          "type": "array",
+          "itemType": "object",
+          "key": "items",
+          "required": true,
+          "model": "product",
+          "description": "Products being removed from cart"
+        }
+      ]
+    },
+    {
+      "name": "add to wishlist",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "add_to_wishlist"
+        }
+      ],
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "add_to_wishlist",
+          "required": true,
+          "validation": [
+            "^add_to_wishlist$"
+          ]
+        },
+        {
+          "type": "string",
+          "itemType": "string",
+          "key": "currency",
+          "required": true,
+          "description": "Currency code",
+          "example": "AUD"
+        },
+        {
+          "type": "decimal2",
+          "itemType": "string",
+          "key": "value",
+          "required": true,
+          "description": "Dollar amount",
+          "example": 30
+        },
+        {
+          "type": "array",
+          "itemType": "object",
+          "key": "items",
+          "required": true,
+          "model": "product",
+          "description": "Products being added to My Designs (wishlist)"
+        }
+      ]
+    },
+    {
+      "name": "remove from wishlist",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "remove_from_wishlist"
+        }
+      ],
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "remove_from_wishlist",
+          "required": true,
+          "validation": [
+            "^remove_from_wishlist$"
+          ]
+        },
+        {
+          "type": "string",
+          "itemType": "string",
+          "key": "currency",
+          "required": true,
+          "description": "Currency code",
+          "example": "AUD"
+        },
+        {
+          "type": "decimal2",
+          "itemType": "string",
+          "key": "value",
+          "required": true,
+          "description": "Dollar amount",
+          "example": 30
+        },
+        {
+          "type": "array",
+          "itemType": "object",
+          "key": "items",
+          "required": true,
+          "model": "product",
+          "description": "Products being removed from My Designs (wishlist)"
+        }
+      ]
+    },
+    {
+      "name": "view cart",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "view_cart"
+        }
+      ],
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "view_cart",
+          "required": true,
+          "validation": [
+            "^view_cart$"
+          ]
+        },
+        {
+          "type": "string",
+          "itemType": "string",
+          "key": "currency",
+          "required": true,
+          "description": "Currency code",
+          "example": "AUD"
+        },
+        {
+          "type": "decimal2",
+          "itemType": "string",
+          "key": "value",
+          "required": true,
+          "description": "Dollar amount",
+          "example": 30
+        },
+        {
+          "type": "array",
+          "itemType": "object",
+          "key": "items",
+          "required": true,
+          "model": "product",
+          "description": "Products in the cart"
+        }
+      ]
+    },
+    {
+      "name": "view item",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "view_item"
+        }
+      ],
+      "description": "When viewing the Preview step of the ring, where the size select and Save button are.",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "view_item",
+          "required": true,
+          "validation": [
+            "^view_item$"
+          ]
+        },
+        {
+          "type": "string",
+          "itemType": "string",
+          "key": "currency",
+          "required": true,
+          "description": "Currency code",
+          "example": "AUD"
+        },
+        {
+          "type": "decimal2",
+          "itemType": "string",
+          "key": "value",
+          "required": true,
+          "description": "Dollar amount",
+          "example": 30
+        },
+        {
+          "type": "array",
+          "itemType": "object",
+          "key": "items",
+          "required": true,
+          "model": "product",
+          "description": "The product (ring) being viewed"
+        }
+      ]
+    },
+    {
+      "name": "begin checkout",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "begin_checkout"
+        }
+      ],
+      "description": "When the user clicks the CTA on cart page that starts the checkout process",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "begin_checkout",
+          "required": true,
+          "validation": [
+            "^begin_checkout$"
+          ]
+        },
+        {
+          "type": "string",
+          "itemType": "string",
+          "key": "currency",
+          "required": true,
+          "description": "Currency code",
+          "example": "AUD"
+        },
+        {
+          "type": "decimal2",
+          "itemType": "string",
+          "key": "value",
+          "required": true,
+          "description": "Dollar amount",
+          "example": 30
+        },
+        {
+          "type": "string",
+          "key": "coupon",
+          "required": false,
+          "description": "Order level coupon codes, comma separated, if applicable",
+          "example": "OFF20"
+        },
+        {
+          "type": "array",
+          "itemType": "object",
+          "key": "items",
+          "required": true,
+          "model": "product",
+          "description": "The products in the cart"
+        }
+      ]
+    },
+    {
+      "name": "form start",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "form_start"
+        }
+      ],
+      "description": "When the user begins the form for the first time, or again after that form's form_complete event, or again after its form_abandon event",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "form_start",
+          "required": true,
+          "validation": [
+            "^form_start$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "form_name",
+          "required": true,
+          "description": "The unique name of the form",
+          "example": "ring designer",
+          "validation": [
+            "^(ring designer|checkout)$"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "form step",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "form_step"
+        }
+      ],
+      "description": "When the user views a step of the form, which can be multiple times if they are allowed to revisit steps",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "form_step",
+          "required": true,
+          "validation": [
+            "^form_step$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "form_name",
+          "required": true,
+          "description": "The unique name of the form",
+          "example": "ring designer",
+          "validation": [
+            "^(ring designer|checkout)$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "step_name",
+          "required": true,
+          "description": "The unique name of the form step",
+          "example": "edit ring",
+          "validation": [
+            "^(edit ring|preview ring)$"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "form field",
+      "identify": [
+        {
+          "key": "event",
+          "matcher": "form_field"
+        }
+      ],
+      "description": "When the user completes or updates a field successfully (no validation errors)",
+      "params": [
+        {
+          "key": "event",
+          "type": "string",
+          "lowercase": true,
+          "example": "form_field",
+          "required": true,
+          "validation": [
+            "^form_field$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "form_name",
+          "required": true,
+          "description": "The unique name of the form",
+          "example": "ring designer",
+          "validation": [
+            "^(ring designer|checkout)$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "step_name",
+          "required": true,
+          "description": "The unique name of the form step",
+          "example": "edit ring",
+          "validation": [
+            "^(edit ring|preview ring)$"
+          ]
+        },
+        {
+          "type": "string",
+          "key": "field_name",
+          "required": true,
+          "description": "The unique name of the form field",
+          "example": "setting",
+          "validation": [
+            "^(setting|metal|diamond|custom name|size)$"
+          ]
+        }
+      ]
+    }
+  ],
+  "modelConsistency": [
+    {
+      "model": "product",
+      "unique": [
+        "item_id"
+      ],
+      "params": [
+        "item_category",
+        "item_brand",
+        "price"
+      ]
+    }
+  ]
+}
